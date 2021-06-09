@@ -5,3 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+
+plant_a =Plant.create(name: "Monstera", fertilize: 30, notes: "she's iffy" )
+plant_b=Plant.create(name: "English Ivy", fertilize: 30, notes: "don't mess with her too much she doesn't like it" )
+plant_c= Plant.create(name: "Snake Plant", fertilize: 30, notes: "super easy low maintenance" )
