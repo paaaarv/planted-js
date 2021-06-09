@@ -21,10 +21,9 @@ class PlantsController < ApplicationController
 
     def index
         plants= Plant.all
-        options = {
-            include: []
+        options = {include:[:light, :water]
         }
-        render json: PlantSerializer.new(plants)
+        render json: PlantSerializer.new(plants,options)
     end
 
     def show

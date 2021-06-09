@@ -1,6 +1,6 @@
 class PlantSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :name, :fertilize, :notes
+  attributes :name
   belongs_to :light
-  belongs_to :water 
+  belongs_to :water
 end
