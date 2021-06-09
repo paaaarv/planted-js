@@ -1,10 +1,10 @@
-
+require 'sort'
 require 'pry'
 class Light < ApplicationRecord
   has_many :plants
+  include Sort
 
-  def self.sorted
-      self.all.sort_by{|light| [light.frequency]}
+  def self.arrange
+      Sort.sorting(self.all)
   end
-
 end
