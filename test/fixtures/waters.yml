@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  plant: one
+  frequency: MyString
+  integer: MyString
+
+two:
+  plant: two
+  frequency: MyString
+  integer: MyString
