@@ -4,6 +4,8 @@ class CreatePlants < ActiveRecord::Migration[5.2]
         t.string :name
         t.integer :fertilize
         t.text :notes
+        t.references :light, foreign_key: true
+        t.references :water, foreign_key: true
       t.timestamps
     end
   end

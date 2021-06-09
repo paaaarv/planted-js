@@ -20,10 +20,17 @@ class PlantsController < ApplicationController
      end
 
     def index
-        binding.pry
         plants= Plant.all
+        options = {
+            include: []
+        }
+        render json: PlantSerializer.new(plants)
     end
 
+    def show
+        plant=Plant.find(params[:id])
+        render json: PlantSerializer.new(plant)
+    end
 
     private
 

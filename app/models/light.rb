@@ -1,3 +1,3 @@
 class Light < ApplicationRecord
-  belongs_to :plant
+  has_many :plants
 end

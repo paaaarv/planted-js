@@ -13,27 +13,27 @@
 ActiveRecord::Schema.define(version: 2021_06_09_151202) do
 
   create_table "lights", force: :cascade do |t|
-    t.integer "plant_id"
     t.integer "frequency"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["plant_id"], name: "index_lights_on_plant_id"
   end
 
   create_table "plants", force: :cascade do |t|
     t.string "name"
     t.integer "fertilize"
     t.text "notes"
+    t.integer "light_id"
+    t.integer "water_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["light_id"], name: "index_plants_on_light_id"
+    t.index ["water_id"], name: "index_plants_on_water_id"
   end
 
   create_table "waters", force: :cascade do |t|
-    t.integer "plant_id"
     t.integer "frequency"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["plant_id"], name: "index_waters_on_plant_id"
   end
 
 end

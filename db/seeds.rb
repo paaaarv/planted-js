@@ -7,6 +7,15 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-plant_a =Plant.create(name: "Monstera", fertilize: 30, notes: "she's iffy" )
-plant_b=Plant.create(name: "English Ivy", fertilize: 30, notes: "don't mess with her too much she doesn't like it" )
-plant_c= Plant.create(name: "Snake Plant", fertilize: 30, notes: "super easy low maintenance" )
+plant_a =Plant.create(name: "Monstera", fertilize: 30, notes: "she's iffy", water_id:1, light_id:1)
+plant_b=Plant.create(name: "English Ivy", fertilize: 30, notes: "don't mess with her too much she doesn't like it",water_id:1, light_id:3)
+plant_c= Plant.create(name: "Snake Plant", fertilize: 30, notes: "super easy low maintenance",water_id:2, light_id:1 )
+
+
+light_a= Light.create(frequency: 7)
+light_b=Light.create(frequency:14)
+light_c=Light.create(frequency:30)
+
+water_a=Water.create(frequency:7)
+water_b=Water.create(frequency:14)
+water_c=Water.create(frequency:30)
