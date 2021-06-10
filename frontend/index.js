@@ -1,9 +1,12 @@
-
+let doc= document.getElementById("container")
 
 const schedule=
     document.getElementById("schedule").addEventListener("click", function(){
         fetch("http://localhost:3000/plants").then(function(response) {
             return response.json().then(function(json){
+                createTable();
+                debugger
+
                 for(let i=0; i<json.data.length; i++){
                     let info =json.data[i]
                     info = {
@@ -17,9 +20,13 @@ const schedule=
             }
             });
 })
-    }
+});
 
-    )
+    const createTable=() => {
+        const table = document.createElement("table");
+        table.setAttribute("class", "table")
+        doc.appendChild(table)
+    }
 
 class Plant{
 
@@ -30,7 +37,7 @@ class Plant{
     }
 
     row(){
-        
+
         debugger
     }
 
