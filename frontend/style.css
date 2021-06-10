@@ -22,10 +22,19 @@ body {
 }
 
 button{
-    
+
 
 }
 
 h1{
     font-size: 4vw;
+}
+
+.table{
+    width: 100%;
+    font-size: 45px;
+    text-align:center;
+    vertical-align: middle;
+
+
 }
