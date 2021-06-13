@@ -3,8 +3,8 @@
 body {
     background-image: radial-gradient(grey 20%, #9fbfa1 20%);
     background-position: 0 0;
-    background-size: 30px 30px;
-    height: 20px;
+    background-size: 15px 15px;
+    height: 10px;
     width: 100%;
 }
 
@@ -21,20 +21,28 @@ body {
     padding-top:3px;
 }
 
-button{
-
-
+.heading{
+    padding-bottom: 20px;
+    font-family: "Sacramento", cursive;
+    font-size:80px;
+    
 }
+
 
 h1{
     font-size: 4vw;
+    font-family: "Sacramento", cursive;
 }
 
 .table{
-    width: 100%;
+    width: 80%;
     font-size: 45px;
     text-align:center;
-    vertical-align: middle;
+    margin: auto;
+    table-layout: fixed;
 
+}
 
+td{
+    font-family: "Amatic SC", cursive;
 }
