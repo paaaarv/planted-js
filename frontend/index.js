@@ -1,4 +1,5 @@
 let doc= document.getElementById("container")
+let heading;
 let label;
 let input;
 let option;
@@ -54,6 +55,9 @@ const addForm =
 
 const createForm = () =>{
     clearContainer();
+    heading=document.createElement("h2")
+    heading.innerHTML="create new plant"
+    doc.appendChild(heading)
     const form = document.createElement("form")
     doc.appendChild(form)
     for(let i=0; i<array.length; i++){
@@ -61,7 +65,7 @@ const createForm = () =>{
         br= document.createElement("br")
         label.innerHTML=`${array[i]}`
         form.appendChild(label)
-        if(array[i] == "water"){
+        if(array[i] == "water" || array[i] == "fertilize"){
             createSelect();
             for(let i=1; i<31; i++){
                 createOption(select, i)}
@@ -76,6 +80,10 @@ const createForm = () =>{
             }
             form.appendChild(select)
             form.appendChild(br)
+        }
+        else if(array[i] == "notes"){
+            let textarea=document.createElement("textarea")
+            form.appendChild(textarea)
         }
         else{
             input = document.createElement("input");
