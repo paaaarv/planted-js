@@ -11,6 +11,17 @@ const lightArray = [];
 const clearContainer = () =>{
     doc.innerHTML = ""
 }
+
+const createSelect = () =>{
+    select=document.createElement('select')
+}
+
+const createOption= (select,text) =>{
+    option=document.createElement("option");
+    option.setAttribute("value", text)
+    option.innerHTML=`${text}`
+    select.appendChild(option)
+}
 const schedule=
     document.getElementById("schedule").addEventListener("click", function(){
         fetch("http://localhost:3000/plants").then(function(response) {
@@ -52,24 +63,17 @@ const createForm = () =>{
         label.innerHTML=`${array[i]}`
         form.appendChild(label)
         if(array[i] == "water"){
-            select= document.createElement("select");
+            createSelect();
             for(let i=1; i<31; i++){
-                option=document.createElement("option");
-                option.setAttribute("value",i)
-                option.innerHTML=`${i}`
-                select.appendChild(option)
-            }
+                createOption(select, i)}
             form.appendChild(select)
             select.insertAdjacentHTML('beforebegin', '<span class="frequencyLabel"> once every </span>')
             select.insertAdjacentHTML("afterend", "<span class='frequencyLabel'> days  </span><br>")
         }
         else if(array[i] == "light"){
-            select= document.createElement("select");
+            createSelect();
             for(let i=0; i<intensity.length; i++){
-                option=document.createElement('option');
-                option.setAttribute("value", i);
-                option.innerHTML=intensity[i]
-                select.appendChild(option)
+                createOption(select, intensity[i])
             }
             form.appendChild(select)
             form.appendChild(br)
