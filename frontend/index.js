@@ -4,6 +4,7 @@ const schedule=
     document.getElementById("schedule").addEventListener("click", function(){
         fetch("http://localhost:3000/plants").then(function(response) {
             return response.json().then(function(json){
+                debugger
                 separateIncluded(json.included)
                 const table = document.createElement("table");
                 createTable(table);
@@ -23,6 +24,37 @@ const schedule=
 })
 });
 
+const addForm =
+    document.getElementById("addplant").addEventListener("click", function(){
+        createForm()
+    })
+
+
+
+const createForm = () =>{
+    let label;
+    let input;
+    let array=['name','fertilize','light','water','notes']
+    const form = document.createElement("form")
+    doc.appendChild(form)
+    for(let i=0; i<array.length; i++){
+        label = document.createElement("label");
+        input = document.createElement("input");
+        input.setAttribute("id", array[i])
+        label.innerHTML=`${array[i]}`
+        form.appendChild(label)
+        form.appendChild(input)
+        if(array[i] == "water"){
+
+            input.insertAdjacentHTML('beforebegin', '<span> once every </span>')
+
+            input.insertAdjacentHTML("afterend", "<span> days</span><br>")
+        }
+
+
+}
+
+}
     const createTable=( table) => {
         let header = document.createElement("thead")
         table.appendChild(header)
@@ -42,25 +74,10 @@ const schedule=
     const separateIncluded = (data) =>{
             let light;
             let water;
-        data.map(x=>{
-
-            if (x.type=="light"){
-                debugger
-                if (Light.length == 0){
+            data.map(x=>{if(x.type=="light"){
+                light= new Light(x.attributes.intensity)}
                     debugger
-                 light= new Light(x.attributes.frequency)
-                 }
-                else{
-                    debugger
-                    for(freq in Light){
-
-                    }
-                }
-            }
-            else{
-                water= new Water(x.attributes.frequency)
-            }
-        })
+                         })
 }
 
 class Plant{

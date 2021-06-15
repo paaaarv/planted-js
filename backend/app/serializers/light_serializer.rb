@@ -1,5 +1,5 @@
 class LightSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :frequency
+  attributes :intensity
   has_many :plants
 end

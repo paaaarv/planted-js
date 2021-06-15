@@ -10,7 +10,6 @@ class PlantsController < ApplicationController
 
     def create
         plant= Plant.new(plant_params)
-        binding.pry
         plant.save
 
     end
