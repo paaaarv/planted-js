@@ -1,4 +1,8 @@
 let doc= document.getElementById("container")
+let label;
+let input;
+let option;
+let array=['name','fertilize','light','water','notes']
 const lightArray = [];
 const schedule=
     document.getElementById("schedule").addEventListener("click", function(){
@@ -32,23 +36,29 @@ const addForm =
 
 
 const createForm = () =>{
-    let label;
-    let input;
-    let array=['name','fertilize','light','water','notes']
     const form = document.createElement("form")
     doc.appendChild(form)
     for(let i=0; i<array.length; i++){
         label = document.createElement("label");
-        input = document.createElement("input");
-        input.setAttribute("id", array[i])
         label.innerHTML=`${array[i]}`
         form.appendChild(label)
-        form.appendChild(input)
         if(array[i] == "water"){
+            let select= document.createElement("select");
+            for(let i=1; i<31; i++){
+                option=document.createElement("option");
+                option.setAttribute("value",i)
+                option.innerHTML=`${i}`
+                select.appendChild(option)
+            }
+            form.appendChild(select)
+            select.insertAdjacentHTML('beforebegin', '<span> once every </span>')
+            select.insertAdjacentHTML("afterend", "<span> days</span><br>")
+        }
+        else{
+            input = document.createElement("input");
+            input.setAttribute("id", array[i])
+            form.appendChild(input)
 
-            input.insertAdjacentHTML('beforebegin', '<span> once every </span>')
-
-            input.insertAdjacentHTML("afterend", "<span> days</span><br>")
         }
 
 
