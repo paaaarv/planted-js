@@ -25,12 +25,27 @@ body {
     padding-bottom: 20px;
     font-family: "Sacramento", cursive;
     font-size:80px;
-    
+
 }
 
 
 h1{
     font-size: 4vw;
+    font-family: "Sacramento", cursive;
+}
+
+form{
+    width: 80%;
+    margin: auto;
+    font-family: "Amatic SC", cursive;
+    font-size: 45px;
+    text-align: center;
+
+
+}
+
+.frequencyLabel{
+    font-size: 30px;
     font-family: "Sacramento", cursive;
 }
 

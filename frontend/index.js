@@ -2,7 +2,10 @@ let doc= document.getElementById("container")
 let label;
 let input;
 let option;
+let select;
+let br;
 let array=['name','fertilize','light','water','notes']
+let intensity=["bright light", "indirect light", "low light"]
 const lightArray = [];
 const schedule=
     document.getElementById("schedule").addEventListener("click", function(){
@@ -40,10 +43,11 @@ const createForm = () =>{
     doc.appendChild(form)
     for(let i=0; i<array.length; i++){
         label = document.createElement("label");
+        br= document.createElement("br")
         label.innerHTML=`${array[i]}`
         form.appendChild(label)
         if(array[i] == "water"){
-            let select= document.createElement("select");
+            select= document.createElement("select");
             for(let i=1; i<31; i++){
                 option=document.createElement("option");
                 option.setAttribute("value",i)
@@ -51,13 +55,25 @@ const createForm = () =>{
                 select.appendChild(option)
             }
             form.appendChild(select)
-            select.insertAdjacentHTML('beforebegin', '<span> once every </span>')
-            select.insertAdjacentHTML("afterend", "<span> days</span><br>")
+            select.insertAdjacentHTML('beforebegin', '<span class="frequencyLabel"> once every </span>')
+            select.insertAdjacentHTML("afterend", "<span class='frequencyLabel'> days  </span><br>")
+        }
+        else if(array[i] == "light"){
+            select= document.createElement("select");
+            for(let i=0; i<intensity.length; i++){
+                option=document.createElement('option');
+                option.setAttribute("value", i);
+                option.innerHTML=intensity[i]
+                select.appendChild(option)
+            }
+            form.appendChild(select)
+            form.appendChild(br)
         }
         else{
             input = document.createElement("input");
             input.setAttribute("id", array[i])
             form.appendChild(input)
+            form.appendChild(br)
 
         }
 
