@@ -5,6 +5,8 @@ let input;
 let option;
 let select;
 let br;
+let light;
+let water;
 let array=['name','fertilize','light','water','notes']
 let intensity=["bright light", "indirect light", "low light"]
 const lightArray = [];
@@ -34,10 +36,12 @@ const schedule=
                 createTable(table);
                 for(let i=0; i<json.data.length; i++){
                     let info =json.data[i]
+                    light=checkRelationship(lightArray, info.relationships.light.data.id);
+                    water = checkRelationship(waterArray, info.relationships.water.data.id);
                     info = {
                         name:info.attributes.name,
-                        water_id: info.relationships.light.data.id,
-                        light_id: info.relationships.water.data.id,
+                        water: water.frequency,
+                        light: light.intensity,
                         id: info.id}
                         let plant= new Plant(info);
 
@@ -47,6 +51,14 @@ const schedule=
             });
 })
 });
+
+const checkRelationship = (array, id) => {
+    for(let i=0;i<array.length;i++){
+        if(array[i].id === id){
+            return array[i]
+        }
+    }
+}
 
 const addForm =
     document.getElementById("addplant").addEventListener("click", function(){
@@ -120,7 +132,11 @@ const createForm = () =>{
             let light;
             let water;
             data.map(x=>{if(x.type=="light"){
-                light= new Light(x.id, x.attributes.intensity, x.relationships.plants.data)}
+                light= new Light(x.id, x.attributes.intensity, x.relationships.plants.data)
+                }else{
+                    water=new Water(x.id, x.attributes.frequency, x.relationships.plants.data)
+            }
+
                          })
 }
 
@@ -129,8 +145,8 @@ class Plant{
     constructor(info){
         this.properties={
                         name: info.name,
-                        light_id: info.light_id,
-                        water_id: info.water_id,
+                        light: info.light,
+                        water:  info.water,
                         id: info.id
                         }
     }
@@ -142,7 +158,7 @@ class Plant{
         for(const key in this.properties){
             if (key !== "id"){
             cell=document.createElement("td")
-            if(key == "water_id"){
+            if(key == "water"){
                 cell.innerHTML= `<span class='frequencyLabel'> once every </span> ${this.properties[key]} <span class='frequencyLabel'> days </span> `
             }
             else{
@@ -157,9 +173,9 @@ class Plant{
 }
 
 class Light {
-    constructor(id, freq,plants){
+    constructor(id, intensity,plants){
         this.id =id;
-        this.frequency=freq;
+        this.intensity=intensity;
         this.plants = plants;
         lightArray.push(this);
     }
@@ -171,8 +187,11 @@ class Light {
 
 class Water {
 
-    constructor(freq){
+    constructor(id,freq, plants){
+        this.id = id;
         this.frequency=freq
+        this.plants = plants;
+        waterArray.push(this)
     }
 
 
