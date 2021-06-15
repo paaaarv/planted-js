@@ -11,9 +11,9 @@ body {
 .nav{
     background-color: transparent;
     text-align: center;
-    width: 28%;
+    width: 70%;
     height:22%;
-    margin-left: 20px;
+    margin: auto;
     border: 3px solid black;
     padding-top:2px;
     margin-bottom:  10px;
@@ -21,8 +21,7 @@ body {
 
 .heading{
     padding-bottom: 20px;
-    font-family: "Sacramento", cursive;
-    text-decoration: 2px underline black;
+    font-family: "Amatic SC", cursive;
     font-size:80px;
 }
 
@@ -42,7 +41,7 @@ h2 {
 }
 
 form{
-    width: 40%;
+    width: 60%;
     margin: auto;
     font-family: "Amatic SC", cursive;
     font-size: 6vw;
@@ -54,11 +53,12 @@ form{
 
 label{
     padding-right: 5px;
+    font-family: "Sacramento",cursive;
 }
 
 button{
-    font-family: "Sacramento",cursive;
-    font-size:30px;
+    font-family: "Amatic SC",cursive;
+    font-size: 5vw;
     background-color: Transparent;
     border:none;
 }
@@ -72,21 +72,20 @@ input, textarea{
     border-style: none none solid none;
     background-color: transparent;
     border-bottom: 2px solid black;
+    font-size:25px;
+    font-family: "Amatic SC", cursive;
 }
 .frequencyLabel{
-    font-size: 4vw;
+    font-size: 6vw;
     font-family: "Sacramento", cursive;
 }
 
 
 .table{
     width: 80%;
-    font-size: 45px;
+    font-size: 6vw;
     text-align:center;
     margin: auto;
+    font-family: "Sacramento", cursive;
 
-}
-
-td{
-    font-family: "Amatic SC", cursive;
 }

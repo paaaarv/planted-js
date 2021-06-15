@@ -8,6 +8,7 @@ let br;
 let array=['name','fertilize','light','water','notes']
 let intensity=["bright light", "indirect light", "low light"]
 const lightArray = [];
+const waterArray=[];
 
 const clearContainer = () =>{
     doc.innerHTML = ""
@@ -36,7 +37,8 @@ const schedule=
                     info = {
                         name:info.attributes.name,
                         water_id: info.relationships.light.data.id,
-                        light_id: info.relationships.water.data.id}
+                        light_id: info.relationships.water.data.id,
+                        id: info.id}
                         let plant= new Plant(info);
 
                 plant.row(table);
@@ -84,6 +86,7 @@ const createForm = () =>{
         else if(array[i] == "notes"){
             let textarea=document.createElement("textarea")
             form.appendChild(textarea)
+            form.appendChild(br)
         }
         else{
             input = document.createElement("input");
@@ -117,17 +120,18 @@ const createForm = () =>{
             let light;
             let water;
             data.map(x=>{if(x.type=="light"){
-                light= new Light(x.attributes.intensity)}
-
+                light= new Light(x.id, x.attributes.intensity, x.relationships.plants.data)}
                          })
 }
 
 class Plant{
 
     constructor(info){
-        this.properties={name: info.name,
+        this.properties={
+                        name: info.name,
                         light_id: info.light_id,
-                        water_id: info.water_id
+                        water_id: info.water_id,
+                        id: info.id
                         }
     }
 
@@ -136,6 +140,7 @@ class Plant{
         let row=document.createElement("tr")
         let cell;
         for(const key in this.properties){
+            if (key !== "id"){
             cell=document.createElement("td")
             if(key == "water_id"){
                 cell.innerHTML= `<span class='frequencyLabel'> once every </span> ${this.properties[key]} <span class='frequencyLabel'> days </span> `
@@ -147,12 +152,15 @@ class Plant{
         }
         table.appendChild(row)
     }
+    }
 
 }
 
 class Light {
-    constructor(freq){
+    constructor(id, freq,plants){
+        this.id =id;
         this.frequency=freq;
+        this.plants = plants;
         lightArray.push(this);
     }
 
