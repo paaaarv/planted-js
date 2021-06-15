@@ -16,16 +16,15 @@ body {
     margin-left: 20px;
     border: 3px solid black;
     padding-top:2px;
-    margin-bottom: 50px;
+    margin-bottom:  10px;
 }
 
 .heading{
     padding-bottom: 20px;
     font-family: "Sacramento", cursive;
+    text-decoration: 2px underline black;
     font-size:80px;
-
 }
-
 
 h1{
     font-size: 10vw;
@@ -75,7 +74,7 @@ input, textarea{
     border-bottom: 2px solid black;
 }
 .frequencyLabel{
-    font-size: 30px;
+    font-size: 4vw;
     font-family: "Sacramento", cursive;
 }
 
@@ -85,7 +84,6 @@ input, textarea{
     font-size: 45px;
     text-align:center;
     margin: auto;
-    table-layout: fixed;
 
 }
 

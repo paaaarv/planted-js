@@ -110,7 +110,6 @@ const createForm = () =>{
             td.setAttribute('class', 'heading')
             td.innerHTML=`${array[i]}`
             header.appendChild(td)
-
         }
     }
 
@@ -119,7 +118,7 @@ const createForm = () =>{
             let water;
             data.map(x=>{if(x.type=="light"){
                 light= new Light(x.attributes.intensity)}
-                    debugger
+
                          })
 }
 
@@ -138,7 +137,11 @@ class Plant{
         let cell;
         for(const key in this.properties){
             cell=document.createElement("td")
-            cell.innerHTML=(this.properties[key])
+            if(key == "water_id"){
+                cell.innerHTML= `<span class='frequencyLabel'> once every </span> ${this.properties[key]} <span class='frequencyLabel'> days </span> `
+            }
+            else{
+            cell.innerHTML=(this.properties[key])}
             row.appendChild(cell)
             row
         }
