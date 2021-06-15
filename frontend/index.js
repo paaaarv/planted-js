@@ -7,11 +7,15 @@ let br;
 let array=['name','fertilize','light','water','notes']
 let intensity=["bright light", "indirect light", "low light"]
 const lightArray = [];
+
+const clearContainer = () =>{
+    doc.innerHTML = ""
+}
 const schedule=
     document.getElementById("schedule").addEventListener("click", function(){
         fetch("http://localhost:3000/plants").then(function(response) {
             return response.json().then(function(json){
-                debugger
+                clearContainer();
                 separateIncluded(json.included)
                 const table = document.createElement("table");
                 createTable(table);
@@ -39,6 +43,7 @@ const addForm =
 
 
 const createForm = () =>{
+    clearContainer();
     const form = document.createElement("form")
     doc.appendChild(form)
     for(let i=0; i<array.length; i++){
