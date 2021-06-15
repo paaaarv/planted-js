@@ -30,7 +30,6 @@ const schedule=
                 separateIncluded(json.included)
                 const table = document.createElement("table");
                 createTable(table);
-
                 for(let i=0; i<json.data.length; i++){
                     let info =json.data[i]
                     info = {
@@ -83,13 +82,14 @@ const createForm = () =>{
             input.setAttribute("id", array[i])
             form.appendChild(input)
             form.appendChild(br)
-
         }
-
-
+}
+    const submit=document.createElement('button')
+    submit.setAttribute("type", "submit");
+    submit.innerHTML = "add plant"
+    form.appendChild(submit)
 }
 
-}
     const createTable=( table) => {
         let header = document.createElement("thead")
         table.appendChild(header)

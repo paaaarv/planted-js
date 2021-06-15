@@ -35,19 +35,43 @@ h1{
 }
 
 form{
-    width: 80%;
+    width: 40%;
     margin: auto;
     font-family: "Amatic SC", cursive;
     font-size: 45px;
     text-align: center;
+    border: 2px solid black;
+    padding: 10px;
 
 
 }
 
+label{
+    padding-right: 5px;
+}
+
+button{
+    font-family: "Sacramento",cursive;
+    font-size:30px;
+    background-color: Transparent;
+    border:none;
+}
+
+button:hover{
+    text-decoration: 2px black underline;
+    color: white;
+}
+
+input{
+    border-style: none none solid none;
+    background-color: transparent;
+    border-bottom: 2px solid black;
+}
 .frequencyLabel{
     font-size: 30px;
     font-family: "Sacramento", cursive;
 }
+
 
 .table{
     width: 80%;
