@@ -7,8 +7,10 @@ let select;
 let br;
 let light;
 let water;
+let formData;
 let array=['name','fertilize','light','water','notes']
 let intensity=["bright light", "indirect light", "low light"]
+let plantArray=[];
 const lightArray = [];
 const waterArray=[];
 
@@ -16,16 +18,21 @@ const clearContainer = () =>{
     doc.innerHTML = ""
 }
 
-const createSelect = () =>{
+const createSelect = (id) =>{
     select=document.createElement('select')
+    select.setAttribute("id",id)
 }
 
-const createOption= (select,text) =>{
+const createOption= (select,id, text) =>{
     option=document.createElement("option");
-    option.setAttribute("value", text)
+    option.setAttribute("value", text);
+    option.setAttribute("id",id);
     option.innerHTML=`${text}`
     select.appendChild(option)
 }
+
+
+
 const schedule=
     document.getElementById("schedule").addEventListener("click", function(){
         fetch("http://localhost:3000/plants").then(function(response) {
@@ -44,9 +51,7 @@ const schedule=
                         light: light.intensity,
                         id: info.id}
                         let plant= new Plant(info);
-
                 plant.row(table);
-                console.log(plant)
             }
             });
 })
@@ -58,6 +63,15 @@ const checkRelationship = (array, id) => {
             return array[i]
         }
     }
+}
+
+const createFormData = (event) =>{
+    object = {}
+for(let i=0;i<event.length; i++){
+    object[event[i].id]=event[i].value
+}
+    return object
+
 }
 
 const addForm =
@@ -73,6 +87,7 @@ const createForm = () =>{
     heading.innerHTML="create new plant"
     doc.appendChild(heading)
     const form = document.createElement("form")
+    form.setAttribute("id", "form")
     doc.appendChild(form)
     for(let i=0; i<array.length; i++){
         label = document.createElement("label");
@@ -80,23 +95,24 @@ const createForm = () =>{
         label.innerHTML=`${array[i]}`
         form.appendChild(label)
         if(array[i] == "water" || array[i] == "fertilize"){
-            createSelect();
+            createSelect(array[i]);
             for(let i=1; i<31; i++){
-                createOption(select, i)}
+                createOption(select, array[i], i)}
             form.appendChild(select)
             select.insertAdjacentHTML('beforebegin', '<span class="frequencyLabel"> once every </span>')
             select.insertAdjacentHTML("afterend", "<span class='frequencyLabel'> days  </span><br>")
         }
         else if(array[i] == "light"){
-            createSelect();
+            createSelect(array[i]);
             for(let i=0; i<intensity.length; i++){
-                createOption(select, intensity[i])
+                createOption(select, array[i],intensity[i])
             }
             form.appendChild(select)
             form.appendChild(br)
         }
         else if(array[i] == "notes"){
             let textarea=document.createElement("textarea")
+            textarea.setAttribute("id", "notes")
             form.appendChild(textarea)
             form.appendChild(br)
         }
@@ -109,11 +125,28 @@ const createForm = () =>{
 }
     const submit=document.createElement('button')
     submit.setAttribute("type", "submit");
+    form.setAttribute("onSubmit",
+    "submitForm(event)")
+
     submit.innerHTML = "add plant"
     form.appendChild(submit)
 }
 
-    const createTable=( table) => {
+const submitForm = (event) =>{
+        event.preventDefault();
+        formData = createFormData(event.currentTarget)
+        fetch("http://localhost:3000/plants",{
+        method: 'POST',
+        headers:  {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(formData)
+  })
+    }
+
+
+const createTable=( table) => {
         let header = document.createElement("thead")
         table.appendChild(header)
         let td;
@@ -128,7 +161,7 @@ const createForm = () =>{
         }
     }
 
-    const separateIncluded = (data) =>{
+const separateIncluded = (data) =>{
             let light;
             let water;
             data.map(x=>{if(x.type=="light"){

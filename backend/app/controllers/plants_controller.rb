@@ -9,6 +9,7 @@ class PlantsController < ApplicationController
     end
 
     def create
+        binding.pry
         plant= Plant.new(plant_params)
         plant.save
 
@@ -33,6 +34,6 @@ class PlantsController < ApplicationController
     private
 
     		def plant_params
-    			params.require(:plant).permit(:name, :fertilize, :notes)
+    			params.require(:plant).permit(:name, :fertilize, :light, :water, :notes)
     		end
 end
