@@ -68,7 +68,16 @@ const checkRelationship = (array, id) => {
 const createFormData = (event) =>{
     object = {}
 for(let i=0;i<event.length; i++){
+    if(event[i].id== "water"){
+        debugger
+        object["water_id"]=event[i].value
+    }
+    else if(event[i].id=="light"){
+        object["light_id"]=event[i].selectedIndex+1
+
+    }else{
     object[event[i].id]=event[i].value
+}
 }
     return object
 
@@ -97,7 +106,7 @@ const createForm = () =>{
         if(array[i] == "water" || array[i] == "fertilize"){
             createSelect(array[i]);
             for(let i=1; i<31; i++){
-                createOption(select, array[i], i)}
+                createOption(select, i, i)}
             form.appendChild(select)
             select.insertAdjacentHTML('beforebegin', '<span class="frequencyLabel"> once every </span>')
             select.insertAdjacentHTML("afterend", "<span class='frequencyLabel'> days  </span><br>")
@@ -105,7 +114,7 @@ const createForm = () =>{
         else if(array[i] == "light"){
             createSelect(array[i]);
             for(let i=0; i<intensity.length; i++){
-                createOption(select, array[i],intensity[i])
+                createOption(select, i+1,intensity[i])
             }
             form.appendChild(select)
             form.appendChild(br)
