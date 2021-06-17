@@ -8,8 +8,7 @@ let br;
 let light;
 let water;
 let formData;
-let array=['name','fertilize','light','water','notes']
-let intensity=["bright light", "indirect light", "low light"]
+
 let plantArray=[];
 const lightArray = [];
 const waterArray=[];
@@ -85,53 +84,13 @@ for(let i=0;i<event.length; i++){
 
 const addForm =
     document.getElementById("addplant").addEventListener("click", function(){
-        createForm()
+        let form = new Form;
+        form.createForm()
     })
 
 
 
-const createForm = () =>{
-    clearContainer();
-    heading=document.createElement("h2")
-    heading.innerHTML="create new plant"
-    doc.appendChild(heading)
-    const form = document.createElement("form")
-    form.setAttribute("id", "form")
-    doc.appendChild(form)
-    for(let i=0; i<array.length; i++){
-        label = document.createElement("label");
-        br= document.createElement("br")
-        label.innerHTML=`${array[i]}`
-        form.appendChild(label)
-        if(array[i] == "water" || array[i] == "fertilize"){
-            createSelect(array[i]);
-            for(let i=1; i<31; i++){
-                createOption(select, i, i)}
-            form.appendChild(select)
-            select.insertAdjacentHTML('beforebegin', '<span class="frequencyLabel"> once every </span>')
-            select.insertAdjacentHTML("afterend", "<span class='frequencyLabel'> days  </span><br>")
-        }
-        else if(array[i] == "light"){
-            createSelect(array[i]);
-            for(let i=0; i<intensity.length; i++){
-                createOption(select, i+1,intensity[i])
-            }
-            form.appendChild(select)
-            form.appendChild(br)
-        }
-        else if(array[i] == "notes"){
-            let textarea=document.createElement("textarea")
-            textarea.setAttribute("id", "notes")
-            form.appendChild(textarea)
-            form.appendChild(br)
-        }
-        else{
-            input = document.createElement("input");
-            input.setAttribute("id", array[i])
-            form.appendChild(input)
-            form.appendChild(br)
-        }
-}
+
     const submit=document.createElement('button')
     submit.setAttribute("type", "submit");
     form.setAttribute("onSubmit",
@@ -139,7 +98,7 @@ const createForm = () =>{
 
     submit.innerHTML = "add plant"
     form.appendChild(submit)
-}
+
 
 const submitForm = (event) =>{
         event.preventDefault();
@@ -181,6 +140,64 @@ const separateIncluded = (data) =>{
 
                          })
 }
+
+class Form {
+    constructor(){
+        this.name= "",
+        this.fertilize= "",
+        this.water_id= "",
+        this.light_id="",
+        this.array=['name','fertilize','light','water','notes'],
+        this.intensity=["bright light", "indirect light", "low light"]
+    }
+
+    createForm(){
+        clearContainer();
+        heading=document.createElement("h2")
+        heading.innerHTML="create new plant"
+        doc.appendChild(heading)
+        const form = document.createElement("form")
+        form.setAttribute("id", "form")
+        doc.appendChild(form)
+        for(let i=0; i<this.array.length; i++){
+            label = document.createElement("label");
+            br= document.createElement("br")
+            label.innerHTML=`${this.array[i]}`
+            form.appendChild(label)
+            if(this.array[i] == "water" || this.array[i] == "fertilize"){
+                createSelect(this.array[i]);
+                for(let i=1; i<31; i++){
+                    createOption(select, i, i)}
+                form.appendChild(select)
+                select.insertAdjacentHTML('beforebegin', '<span class="frequencyLabel"> once every </span>')
+                select.insertAdjacentHTML("afterend", "<span class='frequencyLabel'> days  </span><br>")
+            }
+            else if(this.array[i] == "light"){
+                createSelect(this.array[i]);
+                for(let i=0; i<intensity.length; i++){
+                    createOption(select, i+1,intensity[i])
+                }
+                form.appendChild(select)
+                form.appendChild(br)
+            }
+            else if(this.array[i] == "notes"){
+                let textarea=document.createElement("textarea")
+                textarea.setAttribute("id", "notes")
+                form.appendChild(textarea)
+                form.appendChild(br)
+            }
+            else{
+                input = document.createElement("input");
+                input.setAttribute("id", this.array[i])
+                form.appendChild(input)
+                form.appendChild(br)
+            }
+    }
+
+
+}
+}
+
 
 class Plant{
 
