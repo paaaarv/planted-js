@@ -16,6 +16,10 @@ light_a= Light.create(intensity: 'full sun')
 light_b=Light.create(intensity:'indirect')
 light_c=Light.create(intensity: 'low light')
 
-water_a=Water.create(frequency:7)
-water_b=Water.create(frequency:14)
-water_c=Water.create(frequency:30)
+
+
+
+for i in 1..30 do
+        Water.create(frequency:i)
+
+end
