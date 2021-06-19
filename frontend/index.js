@@ -76,6 +76,8 @@ const checkRelationship = (array, id) => {
 
 const postForm = (event) =>{
        event.preventDefault();
+       let form=document.getElementById("form")
+       form.reset()
        formData = formObject.createFormData(event.currentTarget)
         fetch("http://localhost:3000/plants",{
         method: 'POST',
