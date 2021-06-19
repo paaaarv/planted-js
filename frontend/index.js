@@ -40,14 +40,17 @@ const dropDown = () =>{
         optionSelect=document.createElement("button")
         optionSelect.innerHTML=array[i]
         optionSelect.setAttribute("id",array[i])
+        optionSelect.addEventListener("click",function(){
+            groupListener(array[i])})
         groupDiv.appendChild(optionSelect)
     }
     doc.appendChild(groupDiv)
 }
 
-const groupBy=()=>{
+const groupListener=(id) =>{
     debugger
 }
+
 const fetchTableData = () =>{
     fetch("http://localhost:3000/plants").then(function(response) {
         return response.json().then(function(json){
