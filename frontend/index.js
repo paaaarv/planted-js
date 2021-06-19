@@ -8,6 +8,7 @@ let br;
 let light;
 let water;
 let formData;
+let submit;
 
 let plantArray=[];
 const lightArray = [];
@@ -91,18 +92,18 @@ const addForm =
 
 
 
-    const submit=document.createElement('button')
-    submit.setAttribute("type", "submit");
-    form.setAttribute("onSubmit",
-    "submitForm(event)")
+    ////const submit=document.createElement('button')
+    //submit.setAttribute("type", "submit");
+    //form.setAttribute("onSubmit",
+//    "submitForm(event)")
 
-    submit.innerHTML = "add plant"
-    form.appendChild(submit)
+//    submit.innerHTML = "add plant"
+//    form.appendChild(submit)
 
 
-const submitForm = (event) =>{
-        event.preventDefault();
-        formData = createFormData(event.currentTarget)
+const postForm = (event) =>{
+       event.preventDefault();
+       formData = createFormData(event.currentTarget)
         fetch("http://localhost:3000/plants",{
         method: 'POST',
         headers:  {
@@ -174,8 +175,8 @@ class Form {
             }
             else if(this.array[i] == "light"){
                 createSelect(this.array[i]);
-                for(let i=0; i<intensity.length; i++){
-                    createOption(select, i+1,intensity[i])
+                for(let i=0; i<this.intensity.length; i++){
+                    createOption(select, i+1,this.intensity[i])
                 }
                 form.appendChild(select)
                 form.appendChild(br)
@@ -192,10 +193,22 @@ class Form {
                 form.appendChild(input)
                 form.appendChild(br)
             }
+
     }
+            this.submitForm();
 
 
 }
+    submitForm(){
+        submit = document.createElement('button')
+        submit.setAttribute("type", "submit");
+        form.setAttribute("onSubmit",
+        "submitForm(event)")
+
+        submit.innerHTML = "add plant"
+        form.appendChild(submit)
+    }
+
 }
 
 
