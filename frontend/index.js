@@ -10,7 +10,7 @@ let water;
 let formData;
 let submit;
 let formObject;
-
+let optionSelect;
 
 const lightArray = [];
 const waterArray=[];
@@ -32,12 +32,28 @@ const createOption= (select,id, text) =>{
     select.appendChild(option)
 }
 
+const dropDown = () =>{
+    let groupDiv = document.createElement('div')
+    groupDiv.innerHTML="<span> group plants by: </span> <br>"
+    let array = ["water", "light"]
+    for(let i=0;i<2;i++){
+        optionSelect=document.createElement("button")
+        optionSelect.innerHTML=array[i]
+        optionSelect.setAttribute("id",array[i])
+        groupDiv.appendChild(optionSelect)
+    }
+    doc.appendChild(groupDiv)
+}
 
+const groupBy=()=>{
+    debugger
+}
 const fetchTableData = () =>{
     fetch("http://localhost:3000/plants").then(function(response) {
         return response.json().then(function(json){
             clearContainer();
             separateIncluded(json.included)
+            dropDown()
             const table = document.createElement("table");
             createTable(table,json);
             })
@@ -46,7 +62,9 @@ const fetchTableData = () =>{
 
 const schedule=
     document.getElementById("schedule").addEventListener("click",function(){
-        fetchTableData()});
+
+        fetchTableData()
+    });
 
 
 const addForm =
@@ -127,6 +145,7 @@ const separateIncluded = (data) =>{
 
                          })
 }
+
 
 class Form {
     constructor(){
