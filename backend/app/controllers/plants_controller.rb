@@ -15,10 +15,6 @@ class PlantsController < ApplicationController
 
     end
 
-    def edit
-       plant = Plant.find(params[:id])
-     end
-
     def index
         plants= Plant.all
         options = {include:[:light, :water]
