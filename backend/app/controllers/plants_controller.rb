@@ -9,7 +9,7 @@ class PlantsController < ApplicationController
     end
 
     def create
-        binding.pry
+
         plant= Plant.new(plant_params)
         plant.save
 
@@ -26,14 +26,14 @@ class PlantsController < ApplicationController
         render json: PlantSerializer.new(plants,options)
     end
 
-    def show
+    def destroy
         plant=Plant.find(params[:id])
-        render json: PlantSerializer.new(plant)
+        plant.destroy
     end
 
     private
 
     		def plant_params
-    			params.require(:plant).permit(:name, :fertilize, :light_id, :water_id, :notes)
+    			params.require(:plant).permit(:name, :fertilize, :light_id, :water_id)
     		end
 end

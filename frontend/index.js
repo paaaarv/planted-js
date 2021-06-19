@@ -9,8 +9,9 @@ let light;
 let water;
 let formData;
 let submit;
+let formObject;
 
-let plantArray=[];
+
 const lightArray = [];
 const waterArray=[];
 
@@ -32,31 +33,38 @@ const createOption= (select,id, text) =>{
 }
 
 
+const fetchTableData = () =>{
+    fetch("http://localhost:3000/plants").then(function(response) {
+        return response.json().then(function(json){
+            clearContainer();
+            separateIncluded(json.included)
+            const table = document.createElement("table");
+            createTable(table,json);
+            })
+        })
+    }
 
 const schedule=
-    document.getElementById("schedule").addEventListener("click", function(){
-        fetch("http://localhost:3000/plants").then(function(response) {
-            return response.json().then(function(json){
-                clearContainer();
-                separateIncluded(json.included)
-                const table = document.createElement("table");
-                createTable(table);
-                for(let i=0; i<json.data.length; i++){
-                    let info =json.data[i]
-                    light=checkRelationship(lightArray, info.relationships.light.data.id);
-                    water = checkRelationship(waterArray, info.relationships.water.data.id);
-                    info = {
-                        name:info.attributes.name,
-                        water: water.frequency,
-                        light: light.intensity,
-                        id: info.id}
-                        let plant= new Plant(info);
-                plant.row(table);
-            }
-            });
-})
-});
+    document.getElementById("schedule").addEventListener("click",function(){
+        fetchTableData()});
 
+
+const addForm =
+    document.getElementById("addplant").addEventListener("click", function(){
+        formObject = new Form;
+        formObject.createForm()
+    })
+
+let removePlant=(id)=>{
+    fetch(`http://localhost:3000/plants/${id}`,{
+    method: 'DELETE',
+    headers:  {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: id
+}).then(fetchTableData())
+    }
 const checkRelationship = (array, id) => {
     for(let i=0;i<array.length;i++){
         if(array[i].id === id){
@@ -65,45 +73,10 @@ const checkRelationship = (array, id) => {
     }
 }
 
-const createFormData = (event) =>{
-    object = {}
-for(let i=0;i<event.length; i++){
-    if(event[i].id== "water"){
-        debugger
-        object["water_id"]=event[i].value
-    }
-    else if(event[i].id=="light"){
-        object["light_id"]=event[i].selectedIndex+1
-
-    }else{
-    object[event[i].id]=event[i].value
-}
-}
-    return object
-
-}
-
-const addForm =
-    document.getElementById("addplant").addEventListener("click", function(){
-        let form = new Form;
-        form.createForm()
-    })
-
-
-
-
-    ////const submit=document.createElement('button')
-    //submit.setAttribute("type", "submit");
-    //form.setAttribute("onSubmit",
-//    "submitForm(event)")
-
-//    submit.innerHTML = "add plant"
-//    form.appendChild(submit)
-
 
 const postForm = (event) =>{
        event.preventDefault();
-       formData = createFormData(event.currentTarget)
+       formData = formObject.createFormData(event.currentTarget)
         fetch("http://localhost:3000/plants",{
         method: 'POST',
         headers:  {
@@ -114,12 +87,11 @@ const postForm = (event) =>{
   })
     }
 
-
-const createTable=( table) => {
+const createTable=( table, json) => {
         let header = document.createElement("thead")
         table.appendChild(header)
         let td;
-        let array = ["name", "light", "water"]
+        let array = ["name", "light", "water",""]
         table.setAttribute("class", "table")
         doc.appendChild(table)
         for(let i=0; i<array.length; i++){
@@ -128,6 +100,18 @@ const createTable=( table) => {
             td.innerHTML=`${array[i]}`
             header.appendChild(td)
         }
+        for(let i=0; i<json.data.length; i++){
+            let info =json.data[i]
+            light=checkRelationship(lightArray, info.relationships.light.data.id);
+            water = checkRelationship(waterArray, info.relationships.water.data.id);
+            info = {
+                name:info.attributes.name,
+                water: water.frequency,
+                light: light.intensity,
+                id: info.id}
+                let plant= new Plant(info);
+        plant.row(table);
+    }
     }
 
 const separateIncluded = (data) =>{
@@ -148,7 +132,7 @@ class Form {
         this.fertilize= "",
         this.water_id= "",
         this.light_id="",
-        this.array=['name','fertilize','light','water','notes'],
+        this.array=['name','fertilize','light','water'],
         this.intensity=["bright light", "indirect light", "low light"]
     }
 
@@ -159,6 +143,8 @@ class Form {
         doc.appendChild(heading)
         const form = document.createElement("form")
         form.setAttribute("id", "form")
+        form.setAttribute("onSubmit",
+        "postForm(event)")
         doc.appendChild(form)
         for(let i=0; i<this.array.length; i++){
             label = document.createElement("label");
@@ -181,12 +167,6 @@ class Form {
                 form.appendChild(select)
                 form.appendChild(br)
             }
-            else if(this.array[i] == "notes"){
-                let textarea=document.createElement("textarea")
-                textarea.setAttribute("id", "notes")
-                form.appendChild(textarea)
-                form.appendChild(br)
-            }
             else{
                 input = document.createElement("input");
                 input.setAttribute("id", this.array[i])
@@ -202,11 +182,24 @@ class Form {
     submitForm(){
         submit = document.createElement('button')
         submit.setAttribute("type", "submit");
-        form.setAttribute("onSubmit",
-        "submitForm(event)")
-
         submit.innerHTML = "add plant"
         form.appendChild(submit)
+    }
+    createFormData(event){
+    for(let i=0;i<event.length; i++){
+        if(event[i].id== "water"){
+            this.water_id=event[i].value
+        }
+        else if(event[i].id=="light"){
+            this.light_id=event[i].selectedIndex+1
+
+        }else{
+
+            this[event[i].id]=event[i].value
+    }
+    }
+        return this
+
     }
 
 }
@@ -228,10 +221,11 @@ class Plant{
         let row=document.createElement("tr")
         let cell;
         for(const key in this.properties){
-            if (key !== "id"){
             cell=document.createElement("td")
             if(key == "water"){
                 cell.innerHTML= `<span class='frequencyLabel'> once every </span> ${this.properties[key]} <span class='frequencyLabel'> days </span> `
+            }else if(key == "id"){
+                cell.innerHTML=`<button onClick="removePlant(${this.properties[key]})"> delete </button>`
             }
             else{
             cell.innerHTML=(this.properties[key])}
@@ -242,7 +236,6 @@ class Plant{
     }
     }
 
-}
 
 class Light {
     constructor(id, intensity,plants){
