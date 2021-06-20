@@ -7,11 +7,12 @@ let select;
 let br;
 let light;
 let water;
+let plantList;
 let formData;
 let submit;
 let formObject;
 let optionSelect;
-
+const plantArray=[];
 const lightArray = [];
 const waterArray=[];
 
@@ -48,7 +49,34 @@ const dropDown = () =>{
 }
 
 const groupListener=(id) =>{
-    debugger
+    clearContainer();
+    dropDown();
+    if(id=="water"){
+        for(let i=0; i<waterArray.length; i++){
+            let waterDiv=document.createElement('div')
+            waterDiv.setAttribute("class", "groupDiv")
+            let waterHeading = document.createElement("h2")
+            waterHeading.innerHTML=`every ${waterArray[i].frequency} days`
+            waterDiv.appendChild(waterHeading)
+            doc.appendChild(waterDiv)
+            let list=document.createElement("ul")
+            for(let j=0; j<waterArray[i].plants.length; j++){
+                let listItem = document.createElement("li")
+                for(let k=0; k<plantArray.length; k++){
+                    if (plantArray[k].properties.id == waterArray[i].plants[j].id){
+                        plantList = plantArray[k].properties.name
+
+                    }
+                }
+                listItem.innerHTML=plantList
+                list.appendChild(listItem)
+            }
+            waterDiv.appendChild(list)
+
+
+        }
+
+}
 }
 
 const fetchTableData = () =>{
@@ -141,10 +169,9 @@ const separateIncluded = (data) =>{
             let light;
             let water;
             data.map(x=>{if(x.type=="light"){
-                light= new Light(x.id, x.attributes.intensity, x.relationships.plants.data)
-                }else{
-                    water=new Water(x.id, x.attributes.frequency, x.relationships.plants.data)
-            }
+                light= new Light(x.id, x.attributes.intensity, x.relationships.plants.data)}
+                else{
+                    water=new Water(x.id, x.attributes.frequency, x.relationships.plants.data)}
 
                          })
 }
@@ -238,6 +265,7 @@ class Plant{
                         water:  info.water,
                         id: info.id
                         }
+        plantArray.push(this)
     }
 
     row(table){
