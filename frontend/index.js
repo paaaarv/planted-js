@@ -35,6 +35,7 @@ const createOption= (select,id, text) =>{
 
 const dropDown = () =>{
     let groupDiv = document.createElement('div')
+    groupDiv.setAttribute("class","group")
     groupDiv.innerHTML="<span> group plants by: </span> <br>"
     let array = ["water", "light"]
     for(let i=0;i<2;i++){
@@ -51,6 +52,9 @@ const dropDown = () =>{
 const groupListener=(id) =>{
     clearContainer();
     dropDown();
+    let groupContainer=document.createElement('div')
+    groupContainer.setAttribute("class", "groupContainer")
+    doc.appendChild(groupContainer)
     if(id=="water"){
         for(let i=0; i<waterArray.length; i++){
             let waterDiv=document.createElement('div')
@@ -58,7 +62,7 @@ const groupListener=(id) =>{
             let waterHeading = document.createElement("h2")
             waterHeading.innerHTML=`every ${waterArray[i].frequency} days`
             waterDiv.appendChild(waterHeading)
-            doc.appendChild(waterDiv)
+            groupContainer.appendChild(waterDiv)
             let list=document.createElement("ul")
             for(let j=0; j<waterArray[i].plants.length; j++){
                 let listItem = document.createElement("li")
@@ -72,10 +76,33 @@ const groupListener=(id) =>{
             }
             waterDiv.appendChild(list)
 
-
         }
 
 }
+    else{
+        for(let i=0; i<lightArray.length; i++){
+            let lightDiv = document.createElement("div")
+            lightDiv.setAttribute("class", "groupDiv")
+            let lightHeading = document.createElement("h2")
+            lightHeading.innerHTML=`${lightArray[i].intensity}`
+            lightDiv.appendChild(lightHeading)
+            groupContainer.appendChild(lightDiv)
+            let list=document.createElement("ul")
+            for(let j=0; j<lightArray[i].plants.length; j++){
+                let listItem = document.createElement("li")
+                for(let k=0; k<plantArray.length; k++){
+                    if (plantArray[k].properties.id == lightArray[i].plants[j].id){
+                        plantList = plantArray[k].properties.name
+                    }
+                }
+                listItem.innerHTML=plantList
+                list.appendChild(listItem)
+            }
+            lightDiv.appendChild(list)
+
+        }
+    }
+
 }
 
 const fetchTableData = () =>{
@@ -197,7 +224,7 @@ class Form {
         this.water_id= "",
         this.light_id="",
         this.array=['name','fertilize','light','water'],
-        this.intensity=["bright light", "indirect light", "low light"]
+        this.intensity=["full sun", "indirect light", "low light"]
     }
 
     createForm(){
