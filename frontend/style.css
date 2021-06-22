@@ -114,9 +114,12 @@ input{
     font-family: "Amatic SC", cursive;
 }
 
+td{
+    padding: 10px;
+}
 
 .frequencyLabel{
-    font-size: 4vw;
+    font-size: 3vw;
     font-family: "Sacramento", cursive;
 }
 

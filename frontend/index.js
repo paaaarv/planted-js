@@ -168,7 +168,7 @@ const createTable=( table, json) => {
         let header = document.createElement("thead")
         table.appendChild(header)
         let td;
-        let array = ["name", "light", "water",""]
+        let array = ["name", "light", "water","fertilize", ""]
         table.setAttribute("class", "table")
         doc.appendChild(table)
         for(let i=0; i<array.length; i++){
@@ -181,12 +181,13 @@ const createTable=( table, json) => {
             let info =json.data[i]
             light=checkRelationship(lightArray, info.relationships.light.data.id);
             water = checkRelationship(waterArray, info.relationships.water.data.id);
-            info = {
+            attributes = {
                 name:info.attributes.name,
                 water: water.frequency,
                 light: light.intensity,
+                fertilize: info.attributes.fertilize,
                 id: info.id}
-                let plant= new Plant(info);
+                let plant= new Plant(attributes);
         plant.row(table);
     }
     }
@@ -303,6 +304,7 @@ class Plant{
                         name: info.name,
                         light: info.light,
                         water:  info.water,
+                        fertilize: info.fertilize,
                         id: info.id
                         }
         plantArray.push(this)
@@ -314,7 +316,7 @@ class Plant{
         let cell;
         for(const key in this.properties){
             cell=document.createElement("td")
-            if(key == "water"){
+            if(key == "water" || key == "fertilize"){
                 cell.innerHTML= `<span class='frequencyLabel'> once every </span> ${this.properties[key]} <span class='frequencyLabel'> days </span> `
             }else if(key == "id"){
                 cell.innerHTML=`<button onClick="removePlant(${this.properties[key]})"> delete </button>`
@@ -337,9 +339,6 @@ class Light {
         lightArray.push(this);
     }
 
-    instance = () =>{
-        debugger
-    }
 }
 
 class Water {
