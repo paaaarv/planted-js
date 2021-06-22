@@ -12,9 +12,9 @@ let formData;
 let submit;
 let formObject;
 let optionSelect;
-const plantArray=[];
-const lightArray = [];
-const waterArray=[];
+let plantArray=[];
+let lightArray = [];
+let waterArray=[];
 
 const clearContainer = () =>{
     doc.innerHTML = ""
@@ -65,7 +65,6 @@ const groupListener=(id) =>{
                 for(let k=0; k<plantArray.length; k++){
                     if (plantArray[k].properties.id == waterArray[i].plants[j].id){
                         plantList = plantArray[k].properties.name
-
                     }
                 }
                 listItem.innerHTML=plantList
@@ -104,7 +103,7 @@ const addForm =
         formObject.createForm()
     })
 
-let removePlant=(id)=>{
+const removePlant=(id)=>{
     fetch(`http://localhost:3000/plants/${id}`,{
     method: 'DELETE',
     headers:  {
@@ -169,11 +168,25 @@ const separateIncluded = (data) =>{
             let light;
             let water;
             data.map(x=>{if(x.type=="light"){
-                light= new Light(x.id, x.attributes.intensity, x.relationships.plants.data)}
-                else{
+                light = arraySearch(lightArray, x, x.type)
+                if(light == false){
+                    light = new Light(x.id, x.attributes.intensity, x.relationships.plants.data)
+                }
+            }else{
+                water = arraySearch(waterArray, x, x.type)
+                if(water == false){
                     water=new Water(x.id, x.attributes.frequency, x.relationships.plants.data)}
+                         }
+})
+}
 
-                         })
+const arraySearch = (array, x, type)=>{
+    if(!array.length || array.filter(y=>y.id==x.id)== false){
+        return false
+    }  else{
+        element=array.filter(y=>y.id==x.id)[0]
+        return element
+    }
 }
 
 
