@@ -1,24 +1,16 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
+A Javascript made SPA in order to keep track of the plants in your home! A few things to get this app up and running: 
 
 * Database creation
+    Must run rake db:migrate to migrate tables.
 
 * Database initialization
 
-* How to run the test suite
+    Run rake db:seed in terminal in order to create the model instances for your watering schedule and light intensity preferences for each plant!
 
-* Services (job queues, cache servers, search engines, etc.)
 
 * Deployment instructions
+    After entering planted directory on your system, make sure to cd to backend and then run rails s in order to start up the backend db.
 
 * ...
